@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int color[1000];
+int parent[1000];
+int dis[1000]={0};
+bool visited[1000]={0};
+vector<int>ar[1000];
+
+
+// in which we test that every neighbour has differnet color with node
+bool bipartite_DFS(int src,int c)
+{
+    visited[src]=true;
+    color[src]=c;
+    
+    for(int i:ar[src])
+    {
+        if(!visited[i])
+        {
+            bipartite_DFS(i,c^1);
+            if(bipartite_DFS(i,c^1)==false)
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if(color[i]==color[src])
+            {
+                return false;
+            }
+        }
+    }
+    
+    return true;
+}
+
+
+int main()
+{
+    
+    int edges,nodes,n,m;
+    cin >> nodes >> edges;
+    for(int i=0;i<edges;i++)
+    {
+        cin >> n >> m;
+        ar[n].push_back(m);
+        ar[m].push_back(n);
+    }
+    
+    if(bipartite_DFS(1,0))
+    {
+        cout << "true" ;
+    }
+    else
+    {
+        cout << "false" ;
+    }
+    cout << endl;
+    for(int i=1;i<=nodes;i++)
+    {
+        cout << color[i] << " ";
+    }
+    cout << endl;
+    
+}
