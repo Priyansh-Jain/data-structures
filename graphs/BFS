@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool visited[1000]={0};
+vector<int>ar[1000];
+
+void BFS(int src)
+{
+    queue<int>q;
+    
+    q.push(src);
+    visited[src]=true;
+    
+    while(!q.empty())
+    {
+        int node = q.front();
+        cout << node << ' ';
+        q.pop();
+        
+        for(int child:ar[node])
+        {
+            if(!visited[child])
+            {
+                q.push(child);
+                visited[child]=true;
+            }
+        }
+    }
+}
+
+int main()
+{
+    
+    int edges,nodes,n,m;
+    cin >> nodes >> edges;
+    for(int i=0;i<edges;i++)
+    {
+        cin >> n >> m;
+        ar[n].push_back(m);
+        ar[m].push_back(n);
+    }
+    
+    BFS(1);
+}
