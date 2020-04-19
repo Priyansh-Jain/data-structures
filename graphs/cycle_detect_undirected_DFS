@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int parent[1000];
+int dis[1000]={0};
+bool visited[1000]={0};
+vector<int>ar[1000];
+
+// undirected means in both direction
+
+//in this algo we detect cycle using back edge if back edge is present means
+//cycle is present and if not also cycle is not
+//we find if node is already visited and child has another parent this means
+//back edge is present 
+bool cycle_detect_undirected_DFS(int src,int par)
+{
+    visited[src]=true;
+    
+    for(int child:ar[src])
+    {
+        if(!visited[child])
+        {
+            if(cycle_detect_undirected_DFS(child,src)==true)
+            {
+                return true;
+            }
+        }
+        else
+        {
+            if(child!=par)
+            {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+
+
+int main()
+{
+    
+    int edges,nodes,n,m;
+    cin >> nodes >> edges;
+    for(int i=0;i<edges;i++)
+    {
+        cin >> n >> m;
+        ar[n].push_back(m);
+        ar[m].push_back(n);
+    }
+    
+    if(cycle_detect_undirected_DFS(1,1))
+    {
+        cout << "true" ;
+    }
+    else
+    {
+        cout << "false" ;
+    }
+    cout << endl;
+    
+}
