@@ -1,0 +1,66 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int parent[1000];
+int dis[1000]={0};
+bool visited[1000]={0};
+vector<int>ar[1000];
+
+//in this algo we detect cycle using back edge if back edge is present means
+//cycle is present and if not also cycle is not
+//we find if node is already visited and child has another parent this means
+//back edge is present 
+
+bool cycle_detect_undirected_BFS(int src)
+{
+    queue<int>q;
+    q.push(src);
+    visited[src]=true;
+    parent[src]=src;
+    
+    while(!q.empty())
+    {
+        int w = q.front();
+        q.pop();
+        
+        for(int neighbour:ar[w])
+        {
+            if(visited[neighbour]==true && parent[w]!=neighbour)
+            {
+                return true;
+            }
+            else if(visited[neighbour]!=true)
+            {
+                q.push(neighbour);
+                visited[neighbour]=true;
+                parent[neighbour]=w;
+            }
+        }
+    }
+    return false;
+}
+
+
+int main()
+{
+    
+    int edges,nodes,n,m;
+    cin >> nodes >> edges;
+    for(int i=0;i<edges;i++)
+    {
+        cin >> n >> m;
+        ar[n].push_back(m);
+        ar[m].push_back(n);
+    }
+    
+    if(cycle_detect_undirected_BFS(1))
+    {
+        cout << "true" ;
+    }
+    else
+    {
+        cout << "false" ;
+    }
+    cout << endl;
+    
+}
