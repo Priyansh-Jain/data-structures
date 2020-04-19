@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int subTREE_size[1000]={0};
+bool visited[1000]={0};
+vector<int>ar[1000];
+
+int subtree_size_dfs(int node)
+{
+    visited[node]=true;
+    int cur_size = 1;
+    
+    for(int child:ar[node])
+    {
+        if(!visited[child])
+        {
+            cur_size += subtree_size_dfs(child);
+        }
+    }
+    subTREE_size[node]=cur_size;
+    return cur_size;
+}
+
+
+int main()
+{
+    
+    int edges,nodes,n,m;
+    cin >> nodes >> edges;
+    for(int i=0;i<edges;i++)
+    {
+        cin >> n >> m;
+        ar[n].push_back(m);
+        ar[m].push_back(n);
+    }
+    
+    cout << subtree_size_dfs(1) << endl;
+    
+    for(int i=1;i<=nodes;i++)
+    {
+        cout << subTREE_size[i] << " ";
+    }
+    
+}
