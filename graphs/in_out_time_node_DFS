@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int timer=1;
+int in[1000];
+int out[1000];
+bool visited[1000]={0};
+vector<int>ar[1000];
+
+//it detects one node lies in the subtree of other node
+//if we want to check 2 node lies in subtree of one node
+//in_time(2)>in_time(1) or out_time(2)<out_time(1)
+
+int in_out_time_node_DFS(int src)
+{
+    visited[src]=true;
+    in[src]=timer++;
+    
+    for(int child:ar[src])
+    {
+        if(!visited[child])
+        {
+            in_out_time_node_DFS(child);
+        }
+    }
+    out[src]=timer++;
+    
+}
+
+int main()
+{
+    
+    int edges,nodes,n,m;
+    cin >> nodes >> edges;
+    for(int i=0;i<edges;i++)
+    {
+        cin >> n >> m;
+        ar[n].push_back(m);
+        ar[m].push_back(n);
+    }
+    
+    in_out_time_node_DFS(1);
+    
+    for(int i=1;i<=nodes;i++)
+    {
+        cout << in[i] << " ";
+    }
+    cout << endl;
+    for(int i=1;i<=nodes;i++)
+    {
+        cout << out[i] << " ";
+    }
+    
+}
