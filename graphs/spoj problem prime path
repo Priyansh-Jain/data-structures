@@ -1,0 +1,130 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool visited[100001]={0};
+int dis[100001]={-1};
+vector<int>ar[100001];
+
+vector<int> prime;
+
+bool isValid(int a,int b)
+{
+    int cnt=0;
+    
+    while(a>0)
+    {
+        if(a % 10 != b % 10)
+        {
+            cnt++;
+        }
+        a=a/10,b=b/10;
+    }
+    
+    if(cnt==1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool isPrime(int n)
+{
+    for(int i=2;i*i<=n;i++)
+    {
+        if(n%i==0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+void buildgraph()
+{
+    for(int i=1000;i<=9999;i++)
+    {
+        if(isPrime(i))
+        {
+            prime.push_back(i);
+        }
+    }
+    
+    for(int i=0;i<prime.size();i++)
+    {
+        for(int j=i+1;j<prime.size();j++)
+        {
+            int a = prime[i];
+            int b = prime[j];
+            
+            if(isValid(a,b))
+            {
+                ar[a].push_back(b);
+                ar[b].push_back(a);
+            }
+        }
+    }
+}
+
+void bfs(int src)
+{
+    queue<int>q;
+    
+    q.push(src);
+    dis[src]=0;
+    visited[src]=true;
+    
+    while(!q.empty())
+    {
+        int curr = q.front();
+        q.pop();
+        
+        for(int n:ar[curr])
+        {
+            if(!visited[n])
+            {
+                dis[n]=dis[curr]+1;
+                q.push(n);
+                visited[n]=true;
+            }
+        }
+    }
+    
+}
+
+
+int main()
+{
+    int t;
+    cin >> t;
+    
+    buildgraph();
+    
+    
+    while(t--)
+    {
+        int a,b;
+        cin >> a >> b;
+        
+        for(int i=1000;i<=9999;i++)
+        {
+            visited[i]=0;
+            dis[i]=-1;
+        }
+        
+        
+        bfs(a);
+        
+        if(dis[b]== -1)
+        {
+            cout << "impossible" << endl;
+        }
+        else
+        {
+            cout << dis[b] << endl;
+        }
+    }
+}
