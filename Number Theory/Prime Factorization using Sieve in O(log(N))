@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+int ar[1000001];
+
+void sieve()
+{
+    int maxn = 1000000;
+    
+    for(int i=1;i<=maxn;i++)
+    {
+        ar[i]=-1;
+    }  
+
+    for(int i=2;i<=maxn;i++)
+    {
+        if(ar[i]== -1)
+        {
+            for(int j=i;j<=maxn;j+=i)
+            {
+                if(ar[j]== -1)
+                {
+                    ar[j]=i;
+                }
+            }
+        }
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    
+   long long int t;
+   cin >> t;
+   
+    while(t--)
+    {
+        int base,n;
+        
+        sieve();
+        cin >>n;
+        
+        while(n>1)
+        {
+
+            int k= ar[n];
+            cout << k << " ";
+            n=n/k;
+        }
+        
+    }
+}
