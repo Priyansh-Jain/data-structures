@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+int prime[1000001];
+
+void binaryEXPO(int base,int n,int m)
+{
+    int res=1;
+    while(n>0)
+    {
+        if(n%2)
+        {
+            res = ((res%m)*(base%m))%m;
+            n--;
+        }
+        else
+        {
+            base=((base%m)*(base%m))%m;
+            n=n/2;
+        }
+    }
+    cout << res;
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    
+   long long int t;
+   cin >> t;
+   
+    while(t--)
+    {
+        int base,n;
+        cin >> base >> n;
+        
+        binaryEXPO(base,n,1000000007);
+        
+        
+    }
+}
