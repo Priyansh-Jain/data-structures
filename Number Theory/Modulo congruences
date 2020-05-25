@@ -1,0 +1,16 @@
+a and b are said to be congruent to each other under Modulo N , If they leave same remainder when divided by N.
+
+a ~= b(Mod N)
+13 ~= 41(Mod 7)
+
+a ~= b(Mod N)
+then,
+a-b ~= 0(Mod N)
+a-b divisible by N
+
+Equations
+a = N*K1 + R
+b = N*K2 + R
+
+a-b = N*K
+a = N*K + b
