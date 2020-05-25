@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define p 1000000007
+long long int F[1000000];
+
+long long int power(long long int a,long long int m)
+{
+    long long int resd=1;
+    while(m>0)
+    {
+        if(m%2)
+        {
+            resd=(resd*1LL*a)%p;
+            m--;
+        }
+        else
+        {
+            a=(a*1LL*a)%p;
+            m=m/2;
+        }
+    }
+    return resd;
+}
+
+long long int C(long long int n,long long int k)
+{
+    if(k>n)
+    {
+        return 0;
+    }
+    
+    long long int res = F[n];
+    res = (res*power(F[k],p-2))%p;
+    res = (res*power(F[n-k],p-2))%p;
+
+    return res;
+}
+
+int main()
+{
+    
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    F[0]=F[1]=1;
+    
+    for(int i=2;i<=1000000;i++)
+    {
+        F[i] = ((F[i-1])*(i)*1LL)%p;
+    }
+    
+    int q;
+    cin >> q;
+    
+    while(q--)
+    {
+        int n,k;
+        cin >> n >> k;
+        
+        cout << C(n,k);
+        
+    }
+    
+}
